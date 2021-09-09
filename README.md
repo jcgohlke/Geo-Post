@@ -40,3 +40,9 @@ An iOS app that allows users to leave geo-fenced messages with text and an image
 * `PostsTableViewController` and `PostTableViewCell` creation
 * Storyboard layout for post cell
 * Configure table view to display a couple dummy text posts to ensure layout and self-sizing config is functioning
+
+## Part 2 Code Tasks
+* Create models as in-memory objects
+* Convert table to display post object data instead of strings
+* Configure location services to collect current GPS location
+* Create "new post" view to collect text info from user and record location

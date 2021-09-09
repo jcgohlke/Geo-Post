@@ -9,17 +9,20 @@ import UIKit
 
 class PostTableViewCell: UITableViewCell {
   
+  static var dateFormatter: DateFormatter {
+    let df = DateFormatter()
+    df.dateStyle = .short
+    df.timeStyle = .short
+    return df
+  }
+  
   @IBOutlet weak var label: UILabel!
+  @IBOutlet weak var dateLabel: UILabel!
+  @IBOutlet weak var locationLabel: UILabel!
   
-  override func awakeFromNib() {
-    super.awakeFromNib()
-    // Initialization code
+  func configure(with post: Post) {
+    label.text = post.text
+    dateLabel.text = PostTableViewCell.dateFormatter.string(from: post.date)
+    locationLabel.text = post.locationDescription
   }
-  
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    
-    // Configure the view for the selected state
-  }
-  
 }

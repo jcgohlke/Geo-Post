@@ -6,85 +6,61 @@
 //
 
 import UIKit
+import CoreLocation
 
 class PostsTableViewController: UITableViewController {
   
-  var cellContent: [String] = [
-    "This is an example post. This is an example post. This is an example post. This is an example post. This is an example post. This is an example post.",
-    "This is an example post."
+  var posts: [Post] = [
+    Post(
+      text: "This is an example post.",
+      author: "Ben",
+      location: CLLocationCoordinate2D(latitude: 1.0, longitude: 1.0),
+      date: Date()
+    ),
+    Post(
+      text: "This is an example post. This is an example post. This is an example post.",
+      author: "Sergio",
+      location: CLLocationCoordinate2D(latitude: 1.0, longitude: 1.0),
+      date: Date()
+    ),
+    Post(
+      text: "This is an example post. This is an example post.",
+      author: "Rick",
+      location: CLLocationCoordinate2D(latitude: 1.0, longitude: 1.0),
+      date: Date()
+    )
   ]
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-     
-    // This is the default, so not needed
-    tableView.rowHeight = UITableView.automaticDimension
-  }
   
   // MARK: - Table view data source
   
-  override func numberOfSections(in tableView: UITableView) -> Int {
-    // #warning Incomplete implementation, return the number of sections
-    return 1
-  }
-  
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    // #warning Incomplete implementation, return the number of rows
-    return cellContent.count
+    return posts.count
   }
   
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostTableViewCell
     
-    // Configure the cell...
-    cell.label.text = cellContent[indexPath.row]
+    cell.configure(with: posts[indexPath.row])
     
     return cell
   }
   
-  /*
-   // Override to support conditional editing of the table view.
-   override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-   // Return false if you do not want the specified item to be editable.
-   return true
-   }
-   */
+  // MARK: - Navigation
   
-  /*
-   // Override to support editing the table view.
-   override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-   if editingStyle == .delete {
-   // Delete the row from the data source
-   tableView.deleteRows(at: [indexPath], with: .fade)
-   } else if editingStyle == .insert {
-   // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-   }
-   }
-   */
+  @IBSegueAction
+  func makeCreatePostController(coder: NSCoder) -> UIViewController? {
+    CreatePostViewController(coder: coder, delegate: self)
+  }
+}
+
+extension PostsTableViewController: CreatePostViewControllerDelegate {
+  func postWasCreated(post: Post) {
+    self.dismiss(animated: true, completion: nil)
+    posts.insert(post, at: 0)
+    tableView.reloadData()
+  }
   
-  /*
-   // Override to support rearranging the table view.
-   override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-   
-   }
-   */
-  
-  /*
-   // Override to support conditional rearranging of the table view.
-   override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-   // Return false if you do not want the item to be re-orderable.
-   return true
-   }
-   */
-  
-  /*
-   // MARK: - Navigation
-   
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destination.
-   // Pass the selected object to the new view controller.
-   }
-   */
-  
+  func userCanceled() {
+    self.dismiss(animated: true, completion: nil)
+  }
 }
