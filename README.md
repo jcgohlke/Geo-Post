@@ -34,3 +34,9 @@ An iOS app that allows users to leave geo-fenced messages with text and an image
 ### Location
 * latitude: `Double`
 * longitude: `Double`
+
+## Part 1 Code Tasks
+* Project init
+* `PostsTableViewController` and `PostTableViewCell` creation
+* Storyboard layout for post cell
+* Configure table view to display a couple dummy text posts to ensure layout and self-sizing config is functioning
